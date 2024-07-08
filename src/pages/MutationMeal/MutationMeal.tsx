@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axiosApi from '../../axiosApi';
 
 const MutationMeal = () => {
   const [meal, setMeal] = useState({
@@ -6,6 +7,7 @@ const MutationMeal = () => {
     calories: '',
     description: '',
   });
+  const [loading, setIsLoading] = useState(false);
 
   const changeMeal = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = event.target;
@@ -15,10 +17,28 @@ const MutationMeal = () => {
     }));
   };
 
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      const apiMeal = {
+        ...meal,
+        calories: Number(meal.calories),
+      };
+
+      await axiosApi.post('/meals.json', apiMeal);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <form>
-      <h4>Add / Edit</h4>
-      <div className="form-group">
+    <form onSubmit={onSubmit}>
+      <h4 className="mt-4">Add / Edit</h4>
+      <div className="form-group mt-3">
         <label htmlFor="time">Select Calories</label>
         <select
           name="time"
@@ -33,7 +53,7 @@ const MutationMeal = () => {
           <option value="Lunch">Lunch</option>
           <option value="Dinner">Dinner</option>
         </select>
-        <div className="form-group">
+        <div className="form-group mt-2">
           <label htmlFor="time">Meal description</label>
           <input
             type="text"
@@ -46,7 +66,7 @@ const MutationMeal = () => {
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-group mt-2">
           <label htmlFor="calories">Calories</label>
           <input
             type="number"
