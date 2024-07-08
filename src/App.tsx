@@ -5,16 +5,16 @@ import MutationMeal from './pages/MutationMeal/MutationMeal';
 
 
 const App = () => {
-    return (
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/new-meal" element={<MutationMeal/>} />
-            <Route path="/meals/:id/edit" element={<MutationMeal/>} />
-            <Route path="*" element={<h1>Page Doesnt Exist</h1>} />
-          </Routes>
-        </Layout>
-    );
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/new-meal" element={<MutationMeal/>}/>
+        <Route path="/meals/:id/edit" element={<MutationMeal/>}/>
+        <Route path="*" element={<h1>Page Doesnt Exist</h1>}/>
+      </Routes>
+    </Layout>
+  );
 };
 
 export default App;
